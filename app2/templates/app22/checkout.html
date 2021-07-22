@@ -1,0 +1,147 @@
+{% extends 'app22/basic.html' %}
+
+{%block title%}Checkout - My Awesome Cart{%endblock%}
+
+
+{%block body%}
+<div class="container">
+    <div class="row">
+
+        <div class="col">
+
+            <h2>Step 11 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
+
+            <div class="mt-5">
+                <ol class="list-group list-group-numbered" id="items">
+
+                </ol>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <h2>Step 2:- Enter Address & Other Details:</h2>
+
+            <form action="/app2/checkout/" class=" py-3" method="POST"> {% csrf_token %}
+                <input type="hidden" name='itemsJson' id="itemsJson" value="a">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label for="na1"><b>Name</b></label>
+                        <input type="text" class="form-control" placeholder="User Name" id="na1" name="name">
+                    </div>
+                    <div class="col-md-6">
+
+
+                        <label for="em1"><b>Email</b></label>
+                        <input type="email" class="form-control" placeholder="Email..." id="em1" name="email">
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+
+                        <label for="ad1"><b>Address</b></label>
+                        <input type="text" class="form-control" placeholder="Add your Address" id="ad1" name="address1">
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col">
+
+                        <label for="ad2"><b>Address2</b></label>
+                        <input type="text" class="form-control" placeholder="Add your Address" id="ad2" name="address2">
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label for="ci1"><b>city</b></label>
+                        <input type="text" class="form-control" id="ci1" name="city">
+                    </div>
+                    <div class="col-md-4">
+
+                        <label for="st1"><b>state</b></label>
+                        <input type="text" placeholder="Enter State" class="form-control" id="st1" name="state">
+                    </div>
+                    <div class="col-md-2">
+
+                        <label for="zi1"><b>Zip</b></label>
+                        <input type="text" class="form-control" id="zi1" name="zip_code">
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+
+                        <label for="ph1"><b>Phone Number</b></label>
+                        <input type="tel" class="form-control" id="ph1" name="phone">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+
+                        <button class="btn btn-primary">Place Order</button>
+                    </div>
+                </div>
+
+
+            </form>
+            <!-- </div> -->
+        </div>
+    </div>
+</div>
+
+{% if thank == 10 %}
+<script>
+
+    alert('Thanks for ordering with us. Your Order is {{id.order_id}}. Use it to track your order using our order tracker.')
+    localStorage.clear()
+    document.location = "/app2/"
+</script>
+{% endif %}
+
+{%endblock%}
+
+
+{%block js%}
+<script>
+    if (localStorage.getItem('cart' == null)) {
+        var cart = {};
+    }
+    else {
+        cart = JSON.parse(localStorage.getItem('cart'))
+        // console.log('popat1001', cart)
+    }
+    // let i = 1;
+    let mystr = ''
+    for (var item3 in cart) {
+        let name = cart[item3][1]
+        let qty = cart[item3][0]
+        let item4 = item3.slice(2,)
+        mystr = mystr + ` <li class="p-3  text-primary border list-group-item d-flex justify-content-between align-items-start">
+                        
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold" style='float-left'><b>${name}</b></div>
+                        </div>
+                        <span class="badge bg-primary rounded-pill" style=>${qty}</span>
+                    </li>`;
+
+        console.log(item3)
+        // console.log(`${i}`, mystr)
+        // i = i + 1
+
+    }
+    document.getElementById('items').innerHTML = mystr;
+   
+
+
+
+    document.getElementById('itemsJson').setAttribute('Value', cart);
+</script>
+
+{%endblock%}

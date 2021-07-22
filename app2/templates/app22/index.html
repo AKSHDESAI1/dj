@@ -1,0 +1,281 @@
+{% extends 'app22/basic.html' %}
+
+{%block title%} AKSH DESAI {%endblock%}
+
+<!-- {%block css%} -->
+
+<!--.a1 {-->
+<!--            transition-property: all;-->
+<!--            transition-duration: 0.7s;-->
+<!--        }-->
+
+<!--        .a1:hover {-->
+<!--            transform: scale(1.05);-->
+<!--        }-->
+<!-- .aksh1{ -->
+<!-- max-width:280px; -->
+<!-- height: 242px; -->
+<!-- image-resolution:350dpi; -->
+<!-- } -->
+
+<!-- {%endblock%} -->
+{%block body%}
+{% for product, range, nslides in allprods1 %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3 class="my-4"><u><i>Flash Sale On {{product.0.category}} - Recommended for you</i></u></h3>
+        </div>
+    </div>
+</div>
+
+<div id="carouselExampleIndicators{{forloop.counter}}" class="  carousel slide text-center m-auto  mt-3 pt-3 pb-3"
+    data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators{{forloop.counter}}" data-bs-slide-to="0"
+            class="active" aria-current="true"></button>
+        {% for i in range %}
+        <button type="button" data-bs-target="#carouselExampleIndicators{{forloop.parentloop.counter}}"
+            data-bs-slide-to="{{i}}"></button>
+        {% endfor %}
+
+    </div>
+    <div class="carousel-inner ">
+        <div class="carousel-item active">
+            <div class="container">
+                <div class="row ">
+                    <!--                        <div class="col">-->
+                    <!--                            <div class="card" style="width: 18rem;">-->
+                    <!--                                <img src="{{product.0.image.url}}" class="card-img-top" alt="...">-->
+                    <!--                                <div class="card-body">-->
+                    <!--                                    <h5 class="card-title">{{product.0.product_name}}</h5>-->
+                    <!--                                    <p class="card-text">{{product.0.desc}}</p>-->
+                    <!--                                    <a href="#" class="btn btn-primary">Add to cart</a>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+
+                    <!--                        </div>-->
+
+                    {% for i in product|slice:"0:" %}
+                    <div class="col">
+                        <!--                            <div class="card-columns">-->
+                        <div class=" card bg-transparent align-items-center a1 " style="width: 18rem;">
+                            <img src="{{i.image.url}}" class="card-img-top aksh1" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
+                                <!--                                    <p class="card-text overflow-auto shadow-lg bg-info text-light border border-3 border-primary" style="width: 260px; height: 100px; ">{{i.desc}}</p>-->
+                                <p class="card-text   border border-3 " style="width: 260px; height: 100px; ">
+                                    {{i.desc|slice:"0:53"}}... </p>
+                                <span id="divpr{{i.id}}">
+                                    <button class="cart btn btn-primary mx-3" id="pr{{i.id}}" onclick="a1(this.id)">Add
+                                        to
+                                        cart</button>
+                                </span>
+                                <a href="/app2/productview/{{i.id}}"><button class="cart btn btn-primary"
+                                        id="qv{{i.id}}">Quick view</button></a>
+                            </div>
+                        </div>
+                        <!--                            </div>-->
+                    </div>
+                    {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item ">
+            <div class="container">
+                <div class="row ">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <button class="carousel-control-prev  d-flex align-items-center "
+        style="top: 250px; width:70px;  height: 20px; background-color: purple" type="button"
+        data-bs-target="#carouselExampleIndicators{{forloop.counter}}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" style="top: 250px; width:70px;  height: 20px; background-color: purple"
+        type="button" data-bs-target="#carouselExampleIndicators{{forloop.counter}}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+{% endfor %}
+{%endblock%}
+
+{%block js%}
+
+<script>
+
+
+    console.log('working....aksh ')
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else {
+        cart = JSON.parse(localStorage.getItem('cart'))
+        updateCart(cart)
+        document.getElementById('cart99').innerText = Object.keys(cart).length;
+        console.log('len', Object.keys(cart).length)
+        // let a1 = 0
+        // let a2 = Object.values(cart)
+        // console.log('a2', a2)
+        // for (let i of a2) {
+        //     a1 = a1 + i
+        // }
+        console.log('rudra998', cart)
+        // document.getElementById('cart99').innerText = a1;
+
+    }
+    // < !--let ru1 = document.querySelector('.cart'); -->
+    // < !--ru1.addEventListener('click', function () {
+    //         -->
+    // < !--console.log(this.id)-->
+    // < !--    })-->
+    // < !--$('.cart').click(function () {
+    //             -->
+    // < !--console.log('clicked'); -->
+    // < !--        var idstr = toString(this.id); -->
+    // < !--console.log(idstr); -->
+    // < !--    })-->
+    function a1(id1) {
+        // console.log('rudra')
+        // var idstr = toString(this.id)
+        // console.log(id1)
+        // console.log(cart)
+        if (cart[id1] != undefined) {
+            qty = cart[id1][0] + 1;
+            // name = 'My Item';
+            // cart[id1] = cart[id1][0] + 1
+            cart[id1] = [qty, name]
+            //                     < !--console.log('aksh3', cart)-->
+            // < !--console.log('aksh4', cart[id1])-->
+        }
+        else {
+            qty = 1;
+            name = document.getElementById('name' + id1).innerHTML;
+            // name = 'My Item'
+            cart[id1] = [qty, name]
+            //                     < !--console.log('aksh5', cart)-->
+            // < !--console.log('aksh6', cart[id1])-->
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('aksh7', cart)
+        // < !--document.getElementById('cart99').innerHTML = Object.keys(cart).length; -->
+        // let a1 = 0
+        // let a2 = Object.values(cart)
+        // for (let i of a2) {
+        //     a1 = a1 + i
+        // }
+        // < !--console.log('rudra998', cart)-->
+        document.getElementById('cart99').innerText = Object.keys(cart).length;
+        updateCart(cart)
+    }
+
+    function updateCart(cart) {
+        for (var key in cart) {
+            document.getElementById('div' + key).innerHTML = "<button id = 'minus" + key + "' onclick='minusfunction(this.id)' class = 'btn btn-primary minus' onclick='q(this.id)'> - </button> <span id='val" + key + "'>" + cart[key][0] + "</span> <button id='plus" + key + "' class='btn btn-primary' onclick='plusfunction(this.id)'>+</button>"
+        }
+        updatePopover(cart)
+    }
+
+    function minusfunction(ele) {
+        let a1 = ele.slice(5,)
+        console.log(a1)
+        if (cart[a1][0] != 0) {
+
+            cart[a1][0] = cart[a1][0] - 1
+            localStorage.setItem('cart', JSON.stringify(cart))
+            updateCart(cart)
+            let a11 = 0
+            let a22 = Object.values(cart)
+            for (let i of a22) {
+                a11 = a11 + i
+            }
+            console.log('rudra998', cart)
+            document.getElementById('cart99').innerText = Object.keys(cart).length;
+        }
+        // updatePopover(cart)
+    }
+    function plusfunction(ele) {
+        let a1 = ele.slice(4,)
+        console.log(a1)
+
+        cart[a1][0] = cart[a1][0] + 1
+        localStorage.setItem('cart', JSON.stringify(cart))
+        updateCart(cart)
+        // let a111 = 0
+        // let a222 = Object.values(cart)
+        // for (let i of a222) {
+        //     a111 = a111 + i
+        // }
+        console.log('rudra998', cart)
+        document.getElementById('cart99').innerText = Object.keys(cart).length;
+        updatePopover(cart)
+    }
+
+    function q(ele) {
+        console.log(ele)
+    }
+
+    var myDefaultAllowList = bootstrap.Tooltip.Default.allowList
+    myDefaultAllowList.button = ['id', 'class', 'type', 'onclick']
+    // updatePopover(cart)
+
+    function updatePopover(cart) {
+        console.log('We are inside updatePopover')
+
+        var popstr = "";
+        popstr = popstr + "<h5>Cart for your items in my shooping cart</h5>"
+        // document.write('<br><br>')
+        i = 1
+        for (var item1 in cart) {
+            if (cart[item1][0] != 0) {
+
+                popstr = popstr + '<b>' + i + ') ' + '</b> '
+                popstr = popstr + '<b>Name:</b> ' + document.getElementById('name' + item1).innerText + '  |  <b>Qty:</b> ' + cart[item1][0]
+                popstr = popstr + '<br>'
+                i += 1
+            }
+
+        }
+        // document.write('<br>');
+        popstr = popstr + "<br><a href='/app2/checkout/' type='button' class='mx-3 btn btn-primary' id='checkout'>Checkout</a><button class='btn btn-primary' id='clearcart'  onclick='Clearcart(cart)'>Clearcart</button>"
+        // document.getElementById('clearcart').addEventListener('click', 'Clearcart(cart)')
+        document.getElementById('pop-over99').setAttribute('data-bs-content', popstr);
+
+    }
+
+    function Clearcart(cart) {
+        for (var item2 in cart) {
+            document.getElementById('div' + item2).innerHTML = '  <button class="cart btn btn-primary mx-3" id="pr{{i.id}}" onclick="a1(this.id)">Add  to  cart</button>'
+        }
+        console.log('akshrudra')
+        localStorage.clear()
+        cart = {}
+        updateCart(cart)
+        updatePopover(cart)
+        let a1 = 0
+        let a2 = Object.values(cart)
+        for (let i of a2) {
+            a1 = a1 + i
+        }
+        // < !--console.log('rudra998', cart)-->
+        document.getElementById('cart99').innerText = a1;
+        location.reload()
+    }
+</script>
+
+{%endblock%}

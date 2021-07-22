@@ -1,0 +1,57 @@
+{% extends 'app22/basic.html' %}
+
+{%block title%}Cntact Us - My Awesome Cart {%endblock%}
+
+
+{%block body%}
+
+<div class="container">
+<!--    {% for item in h%}-->
+<!--    <div>{{item.product_id }}</div>-->
+<!--    {% endfor %}-->
+    <div class="row">
+        <div class="col">
+
+            <div class="col-lg-12">
+                <h2 class="my-3"><u><i>Contact Us Regarding any query</i></u></h2>
+                <form action="/app2/contact/" method="post"> {% csrf_token %}
+                    <div class="form-group my-2 mt-4">
+                        <label for="name"><b>Your Name:- </b></label>
+                        <input type="name" id="name" placeholder="Enter your Name" required="" name="name8"
+                            class="form-control ">
+                    </div>
+                    <div class="form-group my-2">
+                        <label for="email"><b>Your Email:- </b></label>
+                        <input type="email" id="email" placeholder="Enter your Email" required="" name="email8"
+                            class="form-control ">
+                    </div>
+                    <div class="form-group my-2">
+                        <label for="phone"><b>Your Phone Number:- </b></label>
+                        <input type="tel" id="phone" placeholder="Enter your Phone Number" minlength="10" maxlength="10"
+                            required="" name="phone8" class="form-control ">
+                    </div>
+                    <div class="form-group my-2">
+                        <label for="message"><b>Describe what you want to contact me for
+                                here:- </b></label>
+                        <textarea type="text" id="message" placeholder="Your message" required="" name="message8"
+                            class="form-control "></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2 my-2">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if thank == 10 %}
+<script>
+
+   alert('Thanks for contacting us. we will get back to you soon.')
+</script>
+{% endif %}
+
+{%endblock%}
+

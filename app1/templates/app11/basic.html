@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>{%block title%} {%endblock%}</title>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
+
+    <!-- <style>{%block css%} {%endblock%}</style> -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0"
+        nonce="3DdYcT2W"></script>
+
+</head>
+
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/app2">My Awesome Cart</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/app2/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/app2/about/">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/app2/tracker/">Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/app2/contact/">Contact Us</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-danger " type="submit">Search</button>
+                </form>
+
+                <button type="button" class="btn btn-success mx-3" data-bs-html='true' id="pop-over99"
+                    data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom">
+                    &nbsp;&nbsp;&nbsp; Cart(<span class=" badge badge-primary badge-pill" id="cart99">0</span>)
+                    &nbsp;&nbsp;&nbsp;
+
+                </button>
+
+            </div>
+        </div>
+    </nav>
+
+    {%block body%} {%endblock%}
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    -->
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+        // document.getElementById('pop-over99').setAttribute('data-bs-content', '<h3>Bottom popover1</h3>')
+        if (localStorage.getItem('cart') == null) {
+            var cart = {};
+        }
+        else {
+            cart = JSON.parse(localStorage.getItem('cart'))
+            // updateCart(cart)
+            // < !--document.getElementById('cart99').innerHTML = Object.keys(cart).length; -->
+            // let a1 = 0
+            // let a2 = Object.values(cart)
+            let a2 = Object.keys(cart).length
+            // for (let i of a2) {
+            //     a1 = a1 + i
+            // }
+            // console.log('rudra998', cart)
+            document.getElementById('cart99').innerText = a2;
+        }
+        // var myDefaultAllowList = bootstrap.Tooltip.Default.allowList
+        // myDefaultAllowList.button = ['id', 'class', 'type', 'onclick']
+        updatePopover(cart);
+        function updatePopover(cart) {
+            console.log('We are inside updatePopover')
+
+            var popstr = "";
+            popstr = popstr + "<h5>Cart for your items in my shooping cart</h5>"
+            // document.write('<br><br>')
+            i = 1
+            for (var item1 in cart) {
+                if (cart[item1][0] != 0) {
+
+                    popstr = popstr + '<b>' + i + ') ' + '</b> '
+                    popstr = popstr + '<b>Name:</b> ' + cart[item1][1] + '  |  <b>Qty:</b> ' + cart[item1][0]
+                    popstr = popstr + '<br>'
+                    i += 1
+                }
+
+            }
+            // document.write('<br>');
+            popstr = popstr + "<br><a href='/app2/checkout/' type='button' class='mx-3 btn btn-primary' id='checkout'>Checkout</a>"
+            // document.getElementById('clearcart').addEventListener('click', 'Clearcart(cart)')
+            document.getElementById('pop-over99').setAttribute('data-bs-content', popstr);
+
+        }
+
+    </script>
+
+    {%block js%} {%endblock%}
+</body>
+
+</html>

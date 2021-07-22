@@ -1,0 +1,81 @@
+{% extends 'app22/basic.html' %}
+
+{%block title%}{{product99.product_name}} - My Awesome Cart {%endblock%}
+
+
+{%block body%}
+<div class="container my-3">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{product99.image.url}}" width="250px" height="380px">
+            <div class="row">
+                <button class="btn btn-primary mx-2 my-3 col-4">Buy Now</button>
+                <button class="btn btn-primary col-4 my-3">Add To Cart</button>
+            </div>
+        </div>
+
+        <div class="col-md-8 my-2 my-sm-0">
+            <h2>{{ product99.product_name }} For You:-</h2>
+            <h3>
+                <p><b>Price : {{ product99.price }}</b></p>
+            </h3>
+            <p>{{ product99.desc }}</p>
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+{%endblock%}
+
+{%block js%}
+
+<script>
+
+    console.log('working....aksh ')
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else {
+        cart = JSON.parse(localStorage.getItem('cart'))
+        document.getElementById('cart99').innerHTML = Object.keys(cart).length;
+        console.log('rudra998', cart)
+
+    }
+    // <!--    let ru1 = document.querySelector('.cart');-->
+    // <!--    ru1.addEventListener('click', function(){-->
+    // <!--        console.log(this.id)-->
+    // <!--    })-->
+    // <!--    $('.cart').click(function(){-->
+    // <!--        console.log('clicked');-->
+    // <!--        var idstr = toString(this.id);-->
+    // <!--        console.log(idstr);-->
+    // <!--    })-->
+    function a1(id1) {
+        // console.log('rudra')
+        // var idstr = toString(this.id)
+        // console.log(id1)
+        // console.log(cart)
+        if (cart[id1] != undefined) {
+            cart[id1] = cart[id1] + 1
+            // <!--            console.log('aksh3', cart)-->
+            // <!--            console.log('aksh4', cart[id1])-->
+        }
+        else {
+            cart[id1] = 1
+            // <!--            console.log('aksh5', cart)-->
+            // <!--            console.log('aksh6', cart[id1])-->
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('aksh7', cart)
+        document.getElementById('cart99').innerHTML = Object.keys(cart).length;
+    }
+
+</script>
+
+{%endblock%}
